@@ -1,0 +1,31 @@
+@import url("https://fonts.googleapis.com/css2?family=Nunito:ital,wght@0,200..1000;1,200..1000&display=swap");
+$font-family-default: "Nunito", sans-serif;
+
+h1 {
+  font-size: 40px;
+  line-height: 40px;
+  font-weight: 400;
+  font-family: $font-family-default;
+}
+
+p {
+  font-size: 16px;
+  line-height: 26px;
+  font-weight: 400;
+  font-family: $font-family-default;
+}
+
+li {
+  font-size: 16px;
+  line-height: 20px;
+  font-weight: 400;
+  font-family: $font-family-default;
+}
+
+a {
+  text-decoration: none;
+  color: white;
+  font-size: 16px;
+  font-weight: 400;
+  font-family: $font-family-default;
+}
