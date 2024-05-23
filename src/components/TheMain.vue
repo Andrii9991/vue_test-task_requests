@@ -12,7 +12,7 @@
           mind. They should also be excited to learn, as the world of Front-End
           Development keeps evolving.
         </p>
-        <BaseButton class="test" />
+        <BaseButton label="Sign Up" class="auth-action" />
       </div>
     </div>
   </div>
@@ -56,7 +56,7 @@ export default {
         margin-bottom: 32px;
       }
 
-      .test {
+      .auth-action {
         margin: 0 auto;
       }
     }
