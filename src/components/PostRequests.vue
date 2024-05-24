@@ -7,6 +7,7 @@
         <strong>Check your {{ errorMessage }} field please!</strong>
       </span>
       <img
+        class="success-image"
         v-if="succesRegistration"
         src="../assets/success-image.svg"
         alt="succes-registretion"
@@ -73,7 +74,11 @@
         </div>
       </form>
 
-      <BaseButton @click.native="isSubmit" label="Sign up" />
+      <BaseButton
+        :isDisabled="disabledButton"
+        @click.native="isSubmit"
+        label="Sign up"
+      />
     </div>
   </div>
 </template>
@@ -134,6 +139,14 @@ export default {
         this.$store.commit("setPositionId", value);
       },
     },
+    disabledButton() {
+      return (
+        this.name === "" ||
+        this.phone === "" ||
+        this.phone === "" ||
+        this.selectedFile === ""
+      );
+    },
   },
   methods: {
     handleFileUpload(event) {
@@ -186,6 +199,10 @@ export default {
 
     .requests-title {
       margin-bottom: 50px;
+    }
+
+    .success-image {
+      margin: 26px 0;
     }
 
     .error-message {

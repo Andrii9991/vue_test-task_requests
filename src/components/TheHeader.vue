@@ -43,6 +43,14 @@ export default {
     .action-buttons {
       display: flex;
 
+      @media (max-width: 1024px) {
+        margin-right: 60px;
+      }
+
+      @media (max-width: 768px) {
+        margin-right: 32px;
+      }
+
       .action-sign-up {
         margin-left: 10px;
       }

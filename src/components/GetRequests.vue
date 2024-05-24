@@ -81,6 +81,14 @@ export default {
     align-items: center;
     width: 1170px;
 
+    @media (max-width: 768px) {
+      margin: 0 32px;
+    }
+
+    @media (max-width: 360px) {
+      margin: 0 16px;
+    }
+
     .requests-title {
       margin-bottom: 50px;
     }
@@ -88,12 +96,16 @@ export default {
     .users-cards {
       width: 100%;
       display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(370px, 370px));
+      grid-template-columns: repeat(auto-fill, minmax(282px, 1fr));
       justify-content: center;
       justify-items: center;
       align-items: center;
       margin-bottom: 50px;
       gap: 29px;
+
+      @media (max-width: 1024px) {
+        grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+      }
 
       .active {
         max-height: 100%;
