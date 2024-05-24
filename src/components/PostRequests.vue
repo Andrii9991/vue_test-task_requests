@@ -196,9 +196,17 @@ export default {
     align-items: center;
     justify-content: center;
     width: 1170px;
+    @media (max-width: 400px) {
+      width: 328px;
+    }
 
     .requests-title {
       margin-bottom: 50px;
+      text-align: center;
+
+      @media (max-width: 360px) {
+        width: 328px;
+      }
     }
 
     .success-image {
@@ -231,6 +239,11 @@ export default {
         line-height: 24px;
         font-weight: 400;
         padding: 14px 16px;
+
+        @media (max-width: 400px) {
+          width: 328px;
+          height: 54px;
+        }
       }
 
       .sign-up-positions {
@@ -238,6 +251,9 @@ export default {
         display: flex;
         flex-direction: column;
         margin-bottom: 50px;
+        @media (max-width: 400px) {
+          width: 328px;
+        }
         .position-title {
           margin-bottom: 11px;
         }
@@ -266,6 +282,9 @@ export default {
           padding: 14px 16px;
           color: $black;
           cursor: pointer;
+          @media (max-width: 400px) {
+            width: 328px;
+          }
 
           .line {
             height: 100%;

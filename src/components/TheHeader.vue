@@ -50,6 +50,9 @@ export default {
       @media (max-width: 768px) {
         margin-right: 32px;
       }
+      @media (max-width: 400px) {
+        margin-right: 16px;
+      }
 
       .action-sign-up {
         margin-left: 10px;

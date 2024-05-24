@@ -43,10 +43,18 @@ export default {
     height: 650px;
     background: url(../assets/pexels-alexandr-podvalny-1227513.jpeg) no-repeat
       center;
-    // background-color: rgba(26, 26, 26, 1);
+    background-color: rgba(26, 26, 26, 0.5);
+
+    @media (max-width: 768px) {
+      max-height: 500px;
+    }
 
     .main-content {
       max-width: 380px;
+
+      @media (max-width: 400px) {
+        margin: 0 16px;
+      }
 
       &__title {
         margin-bottom: 21px;
