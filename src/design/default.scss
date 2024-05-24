@@ -17,3 +17,13 @@ input {
   outline: none;
   border: none;
 }
+
+label {
+  @extend p;
+  display: flex;
+}
+
+label:not(:last-child) {
+  @extend p;
+  margin-bottom: 7px;
+}

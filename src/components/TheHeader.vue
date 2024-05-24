@@ -4,8 +4,12 @@
       <img src="../assets/Logo.svg" alt="logo" />
 
       <div class="action-buttons">
-        <BaseButton label="Users" />
-        <BaseButton class="action-sign-up" label="Sign Up" />
+        <BaseButton href="#getrequests" label="Users" />
+        <BaseButton
+          href="#post-requests"
+          class="action-sign-up"
+          label="Sign Up"
+        />
       </div>
     </div>
   </header>
@@ -38,6 +42,14 @@ export default {
 
     .action-buttons {
       display: flex;
+
+      @media (max-width: 1024px) {
+        margin-right: 60px;
+      }
+
+      @media (max-width: 768px) {
+        margin-right: 32px;
+      }
 
       .action-sign-up {
         margin-left: 10px;

@@ -1,9 +1,13 @@
 <template>
-  <div class="get-requests">
+  <div class="get-requests" id="getrequests">
     <div class="get-requests__container">
       <h1 class="requests-title">Working with GET request</h1>
-      <div class="users-cards">
-        <div class="users-cards__item" v-for="user in allUsers" :key="user.id">
+      <div class="users-cards" :class="{ active: showUsers }">
+        <div
+          class="users-cards__item"
+          v-for="user in sortedAllUsers"
+          :key="user.id"
+        >
           <img class="avatar" :src="user.photo" alt="photo" />
           <p class="user-name">{{ user.name }}</p>
           <p>{{ user.position }}</p>
@@ -11,7 +15,12 @@
           <p class="user-phone">{{ user.phone }}</p>
         </div>
       </div>
-      <BaseButton label="Show more" size="big" />
+      <BaseButton
+        v-if="sortedAllUsers.length >= 6"
+        @click.native="onShowUsers"
+        :label="showUsers ? 'Show less' : 'Show more'"
+        size="big"
+      />
     </div>
   </div>
 </template>
@@ -26,18 +35,35 @@ export default {
     BaseButton,
   },
   data() {
-    return {};
+    return {
+      showUsers: false,
+    };
   },
 
   computed: {
     ...mapState({
       allUsers: (state) => state.users.allUsers,
     }),
+
+    sortedAllUsers() {
+      const storeAllUsers = [...this.allUsers];
+      const firstSixUsers = storeAllUsers.slice(0, 6);
+      if (this.showUsers === false) {
+        return firstSixUsers;
+      } else {
+        return storeAllUsers;
+      }
+    },
+  },
+
+  methods: {
+    onShowUsers() {
+      this.showUsers = !this.showUsers;
+    },
   },
 
   async mounted() {
     await getAllUsers();
-    console.log(this.allUsers);
   },
 };
 </script>
@@ -55,6 +81,14 @@ export default {
     align-items: center;
     width: 1170px;
 
+    @media (max-width: 768px) {
+      margin: 0 32px;
+    }
+
+    @media (max-width: 360px) {
+      margin: 0 16px;
+    }
+
     .requests-title {
       margin-bottom: 50px;
     }
@@ -62,12 +96,20 @@ export default {
     .users-cards {
       width: 100%;
       display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(370px, 370px));
+      grid-template-columns: repeat(auto-fill, minmax(282px, 1fr));
       justify-content: center;
       justify-items: center;
       align-items: center;
       margin-bottom: 50px;
       gap: 29px;
+
+      @media (max-width: 1024px) {
+        grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+      }
+
+      .active {
+        max-height: 100%;
+      }
 
       &__item {
         display: flex;
