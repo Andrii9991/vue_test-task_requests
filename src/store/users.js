@@ -3,13 +3,16 @@ export default {
   state: {
     allPositions: [],
     allUsers: [],
+    currentUser: {},
     positionId: "",
     name: "",
     email: "",
     phone: "",
-    user: {},
+    file: "",
   },
-  getters: {},
+  getters: {
+    getFile: (state) => state.file,
+  },
   mutations: {
     setAllUsers(state, newUsers) {
       state.allUsers = [...newUsers];
@@ -30,7 +33,21 @@ export default {
     setPositionId(state, newPositionId) {
       state.positionId = newPositionId;
     },
+    setFile(state, newFile) {
+      state.file = newFile;
+    },
+    setCurrentUser(state) {
+      state.currentUser.name = state.name;
+      state.currentUser.email = state.email;
+      state.currentUser.position_id = state.positionId;
+      state.currentUser.phone = state.phone;
+      state.currentUser.photo = state.file;
+    },
+
+    setNewUser(state) {
+      state.allUsers.unshift(state.currentUser);
+    },
   },
-  actions: {},
+
   modules: {},
 };

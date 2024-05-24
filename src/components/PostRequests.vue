@@ -8,7 +8,7 @@
         method="POST"
         @submit.prevent="isSubmit"
       >
-        <BaseInput type="text" v-model="name" placeholder="Your name" />
+        <BaseInput type="phone" v-model="name" placeholder="Your name" />
         <BaseInput type="email" v-model="email" placeholder="Email" />
         <BaseInput type="phone" v-model="phone" placeholder="Phone" />
 
@@ -24,6 +24,22 @@
             {{ position.name }}
           </label>
         </div>
+
+        <div class="file-input-container">
+          <input
+            type="file"
+            class="sm-input-file"
+            id="sm-ip-1"
+            @input="handleFileUpload"
+          />
+          <label class="for-sm-input-file" for="sm-ip-1"
+            >Upload
+            <hr class="line" />
+            <span class="span-text" id="file-name">{{
+              selectedFile ? selectedFile.name : "Upload the file"
+            }}</span>
+          </label>
+        </div>
       </form>
 
       <BaseButton @click.native="isSubmit" label="Sign up" />
@@ -34,10 +50,14 @@
 <script>
 import BaseButton from "./UiComponents/BaseButton.vue";
 import BaseInput from "./UiComponents/BaseInput.vue";
+// import { vMaska } from "maska";
+
 import { mapState } from "vuex";
+
 import { signUp, getAllPositions } from "../api/requests";
 
 export default {
+  // directives: { maska: vMaska },
   name: "PostRequests",
   components: {
     BaseButton,
@@ -45,7 +65,9 @@ export default {
   },
 
   data() {
-    return {};
+    return {
+      selectedFile: "",
+    };
   },
   computed: {
     ...mapState({
@@ -85,9 +107,17 @@ export default {
     },
   },
   methods: {
-    isSubmit() {
-      signUp();
-      console.log(this.position);
+    handleFileUpload(event) {
+      this.selectedFile = event.target.files[0];
+
+      this.$store.commit("setFile", this.selectedFile);
+    },
+    async isSubmit() {
+      await signUp();
+
+      await this.$store.commit("setCurrentUser");
+      await this.$store.commit("setNewUser");
+      // await getAllUsers();
     },
   },
 
@@ -127,6 +157,7 @@ export default {
         width: 100%;
         display: flex;
         flex-direction: column;
+        margin-bottom: 50px;
         .position-title {
           margin-bottom: 11px;
         }
@@ -135,6 +166,37 @@ export default {
           width: 20px;
           background-color: $blue;
           margin: 3px 12px 3px 0;
+        }
+      }
+      .file-input-container {
+        display: inline;
+
+        .sm-input-file {
+          opacity: 0;
+        }
+        .for-sm-input-file {
+          display: flex;
+          width: 380px;
+          height: 54px;
+          border-radius: 4px;
+          box-shadow: 0 0 0 1px $gray-border inset;
+          font-size: 16px;
+          line-height: 26px;
+          font-weight: 400;
+          padding: 14px 16px;
+          color: $black;
+          cursor: pointer;
+
+          .line {
+            height: 100%;
+            margin-left: 16px;
+          }
+        }
+
+        .span-text {
+          display: inline;
+          color: $gray-file;
+          padding-left: 16px;
         }
       }
     }

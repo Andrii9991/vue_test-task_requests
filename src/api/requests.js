@@ -18,19 +18,22 @@ export const signUp = async () => {
         email: store.state.users.email,
         phone: store.state.users.phone,
         position_id: store.state.users.positionId,
-        // photo:
-        //   "https://frontend-test-assignment-api.abz.agency/images/users/5b977ba13fb3330.jpeg",
+        photo: store.state.users.file,
       },
+
       {
         headers: {
           Token: responseToken.data.token,
+          "Content-Type": "multipart/form-data",
         },
       }
     );
 
+    console.log(store.state.users.currentUser);
     return response;
   } catch (err) {
     console.log(err);
+    console.log(store.state.users.currentUser);
   }
 };
 
