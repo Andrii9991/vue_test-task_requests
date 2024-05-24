@@ -12,7 +12,7 @@
           mind. They should also be excited to learn, as the world of Front-End
           Development keeps evolving.
         </p>
-        <BaseButton label="Sign Up" class="auth-action" />
+        <BaseButton href="#post-requests" label="Sign Up" class="auth-action" />
       </div>
     </div>
   </div>

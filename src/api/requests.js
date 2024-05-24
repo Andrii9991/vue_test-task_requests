@@ -29,17 +29,23 @@ export const signUp = async () => {
       }
     );
 
-    console.log(store.state.users.currentUser);
-    return response;
-  } catch (err) {
-    console.log(err);
-    console.log(store.state.users.currentUser);
+    return {
+      success: response.data.success,
+      message: response.data.message,
+    };
+  } catch (response) {
+    console.error(response);
+    const errorKeys = Object.keys(response.response.data.fails);
+    const firstErrorKey = errorKeys[0];
+
+    return {
+      message: firstErrorKey,
+    };
   }
 };
 
 export const getAllPositions = async () => {
   const responsePositions = await instanceApi.get("/positions");
 
-  console.log(responsePositions.data);
   store.commit("setAllPositions", responsePositions.data.positions);
 };

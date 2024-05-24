@@ -4,8 +4,12 @@
       <img src="../assets/Logo.svg" alt="logo" />
 
       <div class="action-buttons">
-        <BaseButton label="Users" />
-        <BaseButton class="action-sign-up" label="Sign Up" />
+        <BaseButton href="#getrequests" label="Users" />
+        <BaseButton
+          href="#post-requests"
+          class="action-sign-up"
+          label="Sign Up"
+        />
       </div>
     </div>
   </header>

@@ -1,16 +1,44 @@
 <template>
-  <div class="post-requests">
+  <div class="post-requests" id="post-requests">
     <div class="post-requests__container">
       <h1 class="requests-title">Working with POST request</h1>
+
+      <span v-if="errorMessage" class="error-message">
+        <strong>Check your {{ errorMessage }} field please!</strong>
+      </span>
+      <img
+        v-if="succesRegistration"
+        src="../assets/success-image.svg"
+        alt="succes-registretion"
+      />
+
       <form
         class="sign-up-action"
         action="#"
         method="POST"
         @submit.prevent="isSubmit"
       >
-        <BaseInput type="phone" v-model="name" placeholder="Your name" />
-        <BaseInput type="email" v-model="email" placeholder="Email" />
-        <BaseInput type="phone" v-model="phone" placeholder="Phone" />
+        <input
+          class="input-name input"
+          v-model="name"
+          type="text"
+          placeholder="Your name"
+        />
+
+        <input
+          class="input-email input"
+          v-model="email"
+          type="email"
+          placeholder="Email"
+        />
+        <input
+          class="input-phone input"
+          type="phone"
+          placeholder="+380"
+          v-model="phone"
+          v-maska
+          data-maska="+380#########"
+        />
 
         <div class="sign-up-positions">
           <p class="position-title">Select your position</p>
@@ -39,6 +67,9 @@
               selectedFile ? selectedFile.name : "Upload the file"
             }}</span>
           </label>
+          <span class="helper-upload-file"
+            >The photo must be jpeg/jpg type.</span
+          >
         </div>
       </form>
 
@@ -49,24 +80,22 @@
 
 <script>
 import BaseButton from "./UiComponents/BaseButton.vue";
-import BaseInput from "./UiComponents/BaseInput.vue";
-// import { vMaska } from "maska";
-
+import { vMaska } from "maska";
 import { mapState } from "vuex";
-
-import { signUp, getAllPositions } from "../api/requests";
+import { signUp, getAllPositions, getAllUsers } from "../api/requests";
 
 export default {
-  // directives: { maska: vMaska },
+  directives: { maska: vMaska },
   name: "PostRequests",
   components: {
     BaseButton,
-    BaseInput,
   },
 
   data() {
     return {
       selectedFile: "",
+      errorMessage: "",
+      succesRegistration: false,
     };
   },
   computed: {
@@ -113,11 +142,25 @@ export default {
       this.$store.commit("setFile", this.selectedFile);
     },
     async isSubmit() {
-      await signUp();
-
-      await this.$store.commit("setCurrentUser");
-      await this.$store.commit("setNewUser");
-      // await getAllUsers();
+      const { success, message } = await signUp();
+      if (success) {
+        this.succesRegistration = success;
+        await this.$store.commit("setCurrentUser");
+        await this.$store.commit("setNewUser");
+        this.name = "";
+        this.email = "";
+        this.phone = "";
+        this.selectedFile = "";
+        this.errorMessage = "";
+        setTimeout(this.onShowSuccessImage, 5000);
+      } else if (!success) {
+        this.errorMessage = message;
+      } else {
+        await getAllUsers();
+      }
+    },
+    onShowSuccessImage() {
+      this.succesRegistration = !this.succesRegistration;
     },
   },
 
@@ -145,6 +188,14 @@ export default {
       margin-bottom: 50px;
     }
 
+    .error-message {
+      color: $red;
+      margin-bottom: 12px;
+      font-weight: 400;
+      letter-spacing: 2px;
+      font-family: "Nunito", sans-serif;
+    }
+
     .sign-up-action {
       display: flex;
       flex-direction: column;
@@ -152,6 +203,18 @@ export default {
       align-items: center;
       margin-bottom: 50px;
       width: 380px;
+
+      .input {
+        width: 380px;
+        height: 54px;
+        margin-bottom: 50px;
+        border-radius: 4px;
+        box-shadow: 0 0 0 1px $gray-border inset;
+        font-size: 20px;
+        line-height: 24px;
+        font-weight: 400;
+        padding: 14px 16px;
+      }
 
       .sign-up-positions {
         width: 100%;
@@ -197,6 +260,14 @@ export default {
           display: inline;
           color: $gray-file;
           padding-left: 16px;
+        }
+        .helper-upload-file {
+          font-size: 12px;
+          line-height: 14px;
+          font-weight: 400;
+          margin-top: 8px;
+          font-family: "Nunito", sans-serif;
+          color: $gray-file;
         }
       }
     }
