@@ -41,7 +41,9 @@ export default {
     align-items: center;
     width: 1170px;
     height: 650px;
-    background-color: #00000080;
+    background: url(../assets/pexels-alexandr-podvalny-1227513.jpeg) no-repeat
+      center;
+    // background-color: rgba(26, 26, 26, 1);
 
     .main-content {
       max-width: 380px;
